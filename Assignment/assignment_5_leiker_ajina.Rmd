@@ -38,8 +38,12 @@ lake_vol(100,10)
 ```
 
 ```{r}
-lake_1 = pmap(list(initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data))
+outflow = c(10,10,10,10)
+evap = c(1,1,1,1)
 
+lake_1 = pmap(list(outflow, evap), lake_vol, initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
+
+lake_1 = pmap(list(outflow, evap), initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
 
 ```
 
