@@ -19,10 +19,27 @@ library(devtools)
 initial_level <- c(100000,120000,140000,160000)
 
 # Creating our random sample of daily precipitation inputs
-nsample = 100
+nsample = 4
 precip_data = rnorm(mean = 10, sd = 2, n=nsample)
 precip_results = data.frame(precip_data=precip_data)
 
-view(precip_results)
+# Combining into 1 dataframe
+possible_lake <- data.frame(initial_level, precip_results)
+
+view(possible_lake)
+```
+
+```{r, by hand checking that our function works}
+source(here("R", "lake_equation.R"))
+
+# Checking that our function works
+
+lake_vol(100,10)
+```
+
+```{r}
+lake_1 = pmap(list(initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data))
+
+
 ```
 
