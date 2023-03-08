@@ -1,0 +1,12 @@
+---
+title: "assignment_5"
+author: "Alia Ajina and Sophia Leiker"
+date: "3/8/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
