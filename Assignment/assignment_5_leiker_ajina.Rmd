@@ -14,4 +14,15 @@ library(purrr)
 library(devtools)
 ```
 
+```{r }
+# Creating our initial lake level dataset
+initial_level <- c(100000,120000,140000,160000)
+
+# Creating our random sample of daily precipitation inputs
+nsample = 100
+precip_data = rnorm(mean = 10, sd = 2, n=nsample)
+precip_results = data.frame(precip_data=precip_data)
+
+view(precip_results)
+```
 
