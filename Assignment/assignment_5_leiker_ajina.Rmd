@@ -26,7 +26,8 @@ precip_results = data.frame(precip_data=precip_data)
 # Combining into 1 dataframe
 possible_lake <- data.frame(initial_level, precip_results)
 
-view(possible_lake)
+#checking the outputs
+head(possible_lake)
 ```
 
 ```{r, by hand checking that our function works}
@@ -43,7 +44,37 @@ evap = c(1,1,1,1)
 
 lake_1 = pmap(list(outflow, evap), lake_vol, initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
 
-lake_1 = pmap(list(outflow, evap), initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
+lake_2 = pmap(list(outflow, evap), lake_vol, initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
 
+lake1_data = as.data.frame(lake_1)
+
+```
+
+Trying something new here
+```{r}
+# Creating our initial lake level dataset
+initial_level <- c(100000,120000,140000,160000)
+
+# Creating our random sample of daily precipitation inputs
+nsample = 4
+precip_data = rnorm(mean = 10, sd = 2, n=nsample)
+precip_results = data.frame(precip_data=precip_data)
+
+#creating inflow and outflow 
+outflow = c(10,10,10,10)
+evap = c(1,1,1,1)
+
+
+
+# Combining into 1 dataframe
+possible_lake2 <- data.frame(initial_level, outflow, evap)
+
+#checking the outputs
+head(possible_lake2)
+
+
+lake_2 = pmap(list(initial_level = possible_lake2$initial_level, outflow = possible_lake2$outflow, evap = possible_lake2$evap), lake_vol, precip_data = possible_lake$precip_data)
+
+lake2_data = as.data.frame(lake_2, col.names = possible_lake2$initial_level)
 ```
 
