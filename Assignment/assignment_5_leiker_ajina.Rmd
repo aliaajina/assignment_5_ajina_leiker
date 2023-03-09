@@ -56,56 +56,29 @@ print(lake_output)
 
 lake_data = as.data.frame(lake_output)
 print(lake_data)
+
+col_names = c("Lake 1 Precip 1: Lake Volume", "Lake 1 Precip 1: Total Change", "Lake 2 Precip 2: Lake Volume", "Lake 2 Precip 2: Total Change", "Lake 3 Precip 3: Lake Volume", "Lake 3 Precip 3: Total Change", "Lake 4 Precip 4: Lake Volume", "Lake 4 Precip 4: Total Change")
+
+colnames(lake_data) = col_names
+
 ```
 
 # Using for loop
-```{r}
 
+```{r}
 for_loop_out = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake)))
-# because we don't initialize it - values are NA
-head(for_loop_out)
 
-# how many lakes are there
-nrow(possible_lake)
-
-# for loops use an index - in this case "i" but you could use anything - it repeats
-# anything between the {} for each values of i between 1 and nrow(possible_car) (which is 3 in our case)
-
-# index in to a matrix (like powerall3) is by row and column powerall3[2,5] is 2nd row and 5th column
 for (i in 1:nrow(possible_lake)) {
-  for_loop_out[,i] = lake_func(initial_level=possible_lake$initial_level[i], outflow = possible_lake$outflow[i],evap = possible_lake$evap[i], precip_data = precip_data)
+  result = lake_func(initial_level=possible_lake$initial_level[i], outflow = possible_lake$outflow[i],evap = possible_lake$evap[i], precip_data = precip_data)
+  for_loop_out[,2*i-1] = result[[1]]   # "lake_vol" to odd-numbered columns
+  for_loop_out[,2*i] = result[[2]]     # "total_change" to even-numbered columns
 }
 
-# now it looks like above
-head(for_loop_out)
+print(for_loop_out)
 
-# we can add column names
-colnames(for_loop_out)=possible_lake$initial_level
+#Updating Column Names
+colnames(for_loop_out) = col_names
 
-```
-
-```{r}
-#trying to get total_change from the for loop
-for_loop_out2 = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake)))
-# because we don't initialize it - values are NA
-head(for_loop_out)
-
-# how many cars area there
-nrow(possible_lake)
-
-# for loops use an index - in this case "i" but you could use anything - it repeats
-# anything between the {} for each values of i between 1 and nrow(possible_car) (which is 3 in our case)
-
-# index in to a matrix (like powerall3) is by row and column powerall3[2,5] is 2nd row and 5th column
-for (i in 1:nrow(possible_lake)) {
-  for_loop_out2[,i] = lake_func(initial_level=possible_lake$initial_level[i], outflow = possible_lake$outflow[i],evap = possible_lake$evap[i], precip_data = precip_data)
-}
-
-# now it looks like above
-head(for_loop_out2)
-
-# we can add column names
-colnames(for_loop_out2)=possible_lake$initial_level
-
+print(for_loop_out)
 ```
 
