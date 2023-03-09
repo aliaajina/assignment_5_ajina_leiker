@@ -73,8 +73,43 @@ possible_lake2 <- data.frame(initial_level, outflow, evap)
 head(possible_lake2)
 
 
-lake_2 = pmap(list(initial_level = possible_lake2$initial_level, outflow = possible_lake2$outflow, evap = possible_lake2$evap), lake_vol, precip_data = possible_lake$precip_data)
+lake_2 = pmap(list(initial_level = initial_level, outflow = outflow, evap = evap), lake_vol, precip_data = precip_data)
+
+print(lake_2)
 
 lake2_data = as.data.frame(lake_2, col.names = possible_lake2$initial_level)
+print(lake2_data)
+```
+
+
+```{r}
+# how do we run each car for all speeds, we use a for loop to cycle through, we need to create a data frame to store results - as above, one column for each car and one row for each speed
+
+powerall3 = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake2)))
+# because we don't initialize it - values are NA
+#head(powerall3)
+
+# how many cars area there
+#nrow(possible_cars)
+
+# for loops use an index - in this case "i" but you could use anything - it repeats
+# anything between the {} for each values of i between 1 and nrow(possible_car) (which is 3 in our case)
+
+# index in to a matrix (like powerall3) is by row and column powerall3[2,5] is 2nd row and 5th column
+for (i in 1:nrow(possible_lake2)) {
+  powerall3[,i] = lake_vol(initial_level=possible_lake2$initial_level[i], outflow = possible_lake2$outflow[i],evap = possible_lake2$evap[i], precip_data = precip_data)
+}
+
+# now it looks like above
+#head(powerall3)
+# we can add column names
+colnames(powerall3)=possible_lake2$initial_level
+
+# plotting is the same as above
+
+# for plotting sometimes its useful to turn columns in to rows
+powerallr3 = powerall3 %>% pivot_longer(cols=everything(), names_to="initial_level", values_to="lake_vol")
+head(powerallr3)
+
 ```
 
