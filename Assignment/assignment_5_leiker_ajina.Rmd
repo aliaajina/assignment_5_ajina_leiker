@@ -14,44 +14,13 @@ library(purrr)
 library(devtools)
 ```
 
-```{r }
-# Creating our initial lake level dataset
-initial_level <- c(100000,120000,140000,160000)
-
-# Creating our random sample of daily precipitation inputs
-nsample = 4
-precip_data = rnorm(mean = 10, sd = 2, n=nsample)
-precip_results = data.frame(precip_data=precip_data)
-
-# Combining into 1 dataframe
-possible_lake <- data.frame(initial_level, precip_results)
-
-#checking the outputs
-head(possible_lake)
-```
-
-```{r, by hand checking that our function works}
+# Sourcing Out Function
+```{r}
 source(here("R", "lake_equation.R"))
-
-# Checking that our function works
-
-lake_vol(100,10)
 ```
 
-```{r}
-outflow = c(10,10,10,10)
-evap = c(1,1,1,1)
-
-lake_1 = pmap(list(outflow, evap), lake_vol, initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
-
-lake_2 = pmap(list(outflow, evap), lake_vol, initial_level = possible_lake$initial_level, precip_data = possible_lake$precip_data)
-
-lake1_data = as.data.frame(lake_1)
-
-```
-
-Trying something new here
-```{r}
+#Creating Dataset to run our function on
+```{r }
 # Creating our initial lake level dataset
 initial_level <- c(100000,120000,140000,160000)
 
@@ -64,52 +33,79 @@ precip_results = data.frame(precip_data=precip_data)
 outflow = c(10,10,10,10)
 evap = c(1,1,1,1)
 
-
-
 # Combining into 1 dataframe
-possible_lake2 <- data.frame(initial_level, outflow, evap)
+possible_lake <- data.frame(initial_level, outflow, evap)
 
 #checking the outputs
-head(possible_lake2)
+head(possible_lake)
+```
+#Checking that our function works
+```{r, by hand checking that our function works}
+# Checking that our function works
 
-
-lake_2 = pmap(list(initial_level = initial_level, outflow = outflow, evap = evap), lake_vol, precip_data = precip_data)
-
-print(lake_2)
-
-lake2_data = as.data.frame(lake_2, col.names = possible_lake2$initial_level)
-print(lake2_data)
+lake_func(100,10)
 ```
 
 
+# Using Pmap
 ```{r}
-# how do we run each car for all speeds, we use a for loop to cycle through, we need to create a data frame to store results - as above, one column for each car and one row for each speed
 
-powerall3 = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake2)))
+lake_output = pmap(list(initial_level = initial_level, outflow = outflow, evap = evap), lake_func, precip_data = precip_data)
+
+print(lake_output)
+
+lake_data = as.data.frame(lake_output)
+print(lake_data)
+```
+
+# Using for loop
+```{r}
+
+for_loop_out = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake)))
 # because we don't initialize it - values are NA
-#head(powerall3)
+head(for_loop_out)
 
-# how many cars area there
-#nrow(possible_cars)
+# how many lakes are there
+nrow(possible_lake)
 
 # for loops use an index - in this case "i" but you could use anything - it repeats
 # anything between the {} for each values of i between 1 and nrow(possible_car) (which is 3 in our case)
 
 # index in to a matrix (like powerall3) is by row and column powerall3[2,5] is 2nd row and 5th column
-for (i in 1:nrow(possible_lake2)) {
-  powerall3[,i] = lake_vol(initial_level=possible_lake2$initial_level[i], outflow = possible_lake2$outflow[i],evap = possible_lake2$evap[i], precip_data = precip_data)
+for (i in 1:nrow(possible_lake)) {
+  for_loop_out[,i] = lake_func(initial_level=possible_lake$initial_level[i], outflow = possible_lake$outflow[i],evap = possible_lake$evap[i], precip_data = precip_data)
 }
 
 # now it looks like above
-#head(powerall3)
+head(for_loop_out)
+
 # we can add column names
-colnames(powerall3)=possible_lake2$initial_level
+colnames(for_loop_out)=possible_lake$initial_level
 
-# plotting is the same as above
+```
 
-# for plotting sometimes its useful to turn columns in to rows
-powerallr3 = powerall3 %>% pivot_longer(cols=everything(), names_to="initial_level", values_to="lake_vol")
-head(powerallr3)
+```{r}
+#trying to get total_change from the for loop
+for_loop_out2 = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake)))
+# because we don't initialize it - values are NA
+head(for_loop_out)
+
+# how many cars area there
+nrow(possible_lake)
+
+# for loops use an index - in this case "i" but you could use anything - it repeats
+# anything between the {} for each values of i between 1 and nrow(possible_car) (which is 3 in our case)
+
+# index in to a matrix (like powerall3) is by row and column powerall3[2,5] is 2nd row and 5th column
+for (i in 1:nrow(possible_lake)) {
+  for_loop_out2[,i] = lake_func(initial_level=possible_lake$initial_level[i], outflow = possible_lake$outflow[i],evap = possible_lake$evap[i], precip_data = precip_data)
+}
+
+# now it looks like above
+head(for_loop_out2)
+
+# we can add column names
+colnames(for_loop_out2)=possible_lake$initial_level
 
 ```
 
