@@ -16,6 +16,7 @@ library(devtools)
 
 # Sourcing Out Function
 ```{r}
+# Sourcing our equation
 source(here("R", "lake_equation.R"))
 ```
 
@@ -29,34 +30,40 @@ nsample = 4
 precip_data = rnorm(mean = 10, sd = 2, n=nsample)
 precip_results = data.frame(precip_data=precip_data)
 
-#creating inflow and outflow 
+# Creating inflow and outflow 
 outflow = c(10,10,10,10)
 evap = c(1,1,1,1)
 
 # Combining into 1 dataframe
 possible_lake <- data.frame(initial_level, outflow, evap)
 
-#checking the outputs
+# Checking the outputs
 head(possible_lake)
 ```
+
 #Checking that our function works
 ```{r, by hand checking that our function works}
-# Checking that our function works
 
+# Checking that our function works
 lake_func(100,10)
+
 ```
 
 
 # Using Pmap
 ```{r}
 
+# Using pmap to run our function through our dataset
 lake_output = pmap(list(initial_level = initial_level, outflow = outflow, evap = evap), lake_func, precip_data = precip_data)
 
+# Checking our output from pmap
 print(lake_output)
 
+# Putting our output into a datafram
 lake_data = as.data.frame(lake_output)
 print(lake_data)
 
+# Renaming our columns
 col_names = c("Lake 1 Precip 1: Lake Volume", "Lake 1 Precip 1: Total Change", "Lake 2 Precip 2: Lake Volume", "Lake 2 Precip 2: Total Change", "Lake 3 Precip 3: Lake Volume", "Lake 3 Precip 3: Total Change", "Lake 4 Precip 4: Lake Volume", "Lake 4 Precip 4: Total Change")
 
 colnames(lake_data) = col_names
@@ -66,6 +73,8 @@ colnames(lake_data) = col_names
 # Using for loop
 
 ```{r}
+
+# Using a for loop to run our function through our dataset and creating a dataframe
 for_loop_out = as.data.frame(matrix(nrow=length(precip_data), ncol=nrow(possible_lake)))
 
 for (i in 1:nrow(possible_lake)) {
@@ -74,11 +83,13 @@ for (i in 1:nrow(possible_lake)) {
   for_loop_out[,2*i] = result[[2]]     # "total_change" to even-numbered columns
 }
 
+# Checking our output
 print(for_loop_out)
 
-#Updating Column Names
+# Updating Column Names
 colnames(for_loop_out) = col_names
 
+# Checking our output
 print(for_loop_out)
 ```
 
