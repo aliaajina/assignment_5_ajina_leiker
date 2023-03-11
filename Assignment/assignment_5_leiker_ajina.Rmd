@@ -1,12 +1,20 @@
----
-title: "assignment_5"
+---c
+title: 'Assignment 5'
 author: "Alia Ajina and Sophia Leiker"
-date: "3/8/2023"
-output: html_document
+date: "March 4, 2023"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: journal
+    code_folding: show
+    smooth_scroll: yes
+    collapsed: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Loading in required packages
 library(tidyverse)
 library(here)
 library(testthat)
@@ -14,13 +22,16 @@ library(purrr)
 library(devtools)
 ```
 
-# Sourcing Out Function
+# Assignment 5
+In this assignment, we created a function to calculate lake level based on four initial lake levels at Huntington Lake in the Sierra Nevadas. These lake levels are: 100,000 gallons, 120,000 gallons, 140,000 gallons, and 160,000 gallons. Additionally we assumed that outflow from the lake stays even at 10 gallons/day and evaporation stays equal at 1 gallon/day. This equation is function for one single day. Precipitation data  (4 values) was created using a random sample generator with a mean of 10 and a standard deviation of 2.
+
+## Sourcing Our Function
 ```{r}
 # Sourcing our equation
 source(here("R", "lake_equation.R"))
 ```
 
-#Creating Dataset to run our function on
+## Creating Dataset to run our function on
 ```{r }
 # Creating our initial lake level dataset
 initial_level <- c(100000,120000,140000,160000)
@@ -41,7 +52,7 @@ possible_lake <- data.frame(initial_level, outflow, evap)
 head(possible_lake)
 ```
 
-#Checking that our function works
+## Checking that our function works
 ```{r, by hand checking that our function works}
 
 # Checking that our function works
@@ -50,7 +61,7 @@ lake_func(100,10)
 ```
 
 
-# Using Pmap
+## Using Pmap
 ```{r}
 
 # Using pmap to run our function through our dataset
@@ -70,8 +81,7 @@ colnames(lake_data) = col_names
 
 ```
 
-# Using for loop
-
+## Using for loop
 ```{r}
 
 # Using a for loop to run our function through our dataset and creating a dataframe
