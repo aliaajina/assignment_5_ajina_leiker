@@ -22,6 +22,8 @@ library(purrr)
 library(devtools)
 library(ggplot2)
 library(tidyr)
+library(cowplot)
+library(kableExtra)
 ```
 
 # Assignment 5
@@ -81,6 +83,11 @@ col_names = c("Lake 1 Precip 1: Lake Volume", "Lake 1 Precip 1: Total Change", "
 
 colnames(lake_data) = col_names
 
+#Making Table Output
+kable_table <- kable(lake_data, caption = "Results using Pmap")
+kable_table %>% 
+  kable_styling(full_width = FALSE)
+
 ```
 
 ## Using for loop
@@ -103,18 +110,56 @@ colnames(for_loop_out) = col_names
 
 # Checking our output
 # print(for_loop_out)
+
+#Making Table Output
+kable_table <- kable(for_loop_out, caption = "Results using For Loop")
+kable_table %>% 
+  kable_styling(full_width = FALSE)
 ```
 
 ## Making a Graph
 ```{r}
-# Pulling the data to long format
-for_loop_out_long <- gather(for_loop_out, key = "Lake Number", value = "Lake Volume (gallons)", 1, 3, 5, 7)
+#Pulling apart dataframes
+vol_graphs <- for_loop_out[, c(1, 3, 5, 7)]
+change_graphs <- for_loop_out[, c(2, 4, 6, 8)]
 
-# Create ggplot bar graph
-ggplot(for_loop_out_long, aes(x = `Lake Volume (gallons)`, y = `Lake Number`)) +
+rownames(change_graphs) <- c("Precip 1", "Precip 2", "Precip 3", "Precip 4")
+
+
+plot1 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 1], fill = rownames(change_graphs))) +
   geom_col() +
-  xlab("Lake Volume (gallons)") +
-  ylab("Lake Number and Precip") +
-  labs(title = "Title Here", )
+  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
+  ggtitle("Lake 1: Total Change for Each Precipitation Input") +
+  ylab("Changed Volume (gal)") +
+  xlab("Input Precipitation Levels") +
+  guides(fill = FALSE)
+  
+plot2 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 2], fill = rownames(change_graphs))) +
+  geom_col() +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
+  ggtitle("Lake 2: Total Change for Each Precipitation Input") +
+  ylab("Changed Volume (gal)") +
+  xlab("Input Precipitation Levels") +
+  guides(fill = FALSE)
+  
+plot3 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 3], fill = rownames(change_graphs))) +
+  geom_col() +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
+  ggtitle("Lake 3: Total Change for Each Precipitation Input") +
+  ylab("Changed Volume (gal)") +
+  xlab("Input Precipitation Levels") +
+  guides(fill = FALSE)
+  
+plot4 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 4], fill = rownames(change_graphs))) +
+  geom_col() +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
+  ggtitle("Lake 4: Total Change for Each Precipitation Input") +
+  ylab("Changed Volume (gal)") +
+  xlab("Input Precipitation Levels") +
+  guides(fill = FALSE)
+
+# Arrange plots in a grid
+plot_grid(plot1, plot2, plot3, plot4, ncol = 2)
+
 ```
 
