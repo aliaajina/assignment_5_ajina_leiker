@@ -20,6 +20,8 @@ library(here)
 library(testthat)
 library(purrr)
 library(devtools)
+library(ggplot2)
+library(tidyr)
 ```
 
 # Assignment 5
@@ -101,5 +103,18 @@ colnames(for_loop_out) = col_names
 
 # Checking our output
 # print(for_loop_out)
+```
+
+## Making a Graph
+```{r}
+# Pulling the data to long format
+for_loop_out_long <- gather(for_loop_out, key = "Lake Number", value = "Lake Volume (gallons)", 1, 3, 5, 7)
+
+# Create ggplot bar graph
+ggplot(for_loop_out_long, aes(x = `Lake Volume (gallons)`, y = `Lake Number`)) +
+  geom_col() +
+  xlab("Lake Volume (gallons)") +
+  ylab("Lake Number and Precip") +
+  labs(title = "Title Here", )
 ```
 
