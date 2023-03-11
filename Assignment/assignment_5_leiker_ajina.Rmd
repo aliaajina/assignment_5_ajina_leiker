@@ -68,11 +68,11 @@ possible_lake <- data.frame(initial_level, outflow, evap)
 lake_output = pmap(list(initial_level = initial_level, outflow = outflow, evap = evap), lake_func, precip_data = precip_data)
 
 # Checking our output from pmap
-print(lake_output)
+# print(lake_output)
 
 # Putting our output into a datafram
 lake_data = as.data.frame(lake_output)
-print(lake_data)
+# print(lake_data)
 
 # Renaming our columns
 col_names = c("Lake 1 Precip 1: Lake Volume", "Lake 1 Precip 1: Total Change", "Lake 2 Precip 2: Lake Volume", "Lake 2 Precip 2: Total Change", "Lake 3 Precip 3: Lake Volume", "Lake 3 Precip 3: Total Change", "Lake 4 Precip 4: Lake Volume", "Lake 4 Precip 4: Total Change")
