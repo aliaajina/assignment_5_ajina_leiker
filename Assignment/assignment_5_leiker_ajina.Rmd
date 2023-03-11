@@ -1,4 +1,4 @@
----c
+---
 title: 'Assignment 5'
 author: "Alia Ajina and Sophia Leiker"
 date: "March 4, 2023"
@@ -49,14 +49,14 @@ evap = c(1,1,1,1)
 possible_lake <- data.frame(initial_level, outflow, evap)
 
 # Checking the outputs
-head(possible_lake)
+# head(possible_lake)
 ```
 
 ## Checking that our function works
 ```{r, by hand checking that our function works}
 
 # Checking that our function works
-lake_func(100,10)
+# lake_func(100,10)
 
 ```
 
@@ -94,12 +94,12 @@ for (i in 1:nrow(possible_lake)) {
 }
 
 # Checking our output
-print(for_loop_out)
+# print(for_loop_out)
 
 # Updating Column Names
 colnames(for_loop_out) = col_names
 
 # Checking our output
-print(for_loop_out)
+# print(for_loop_out)
 ```
 
