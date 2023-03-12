@@ -12,7 +12,7 @@ output:
     collapsed: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # Loading in required packages
 library(tidyverse)
