@@ -86,7 +86,9 @@ colnames(lake_data) = col_names
 #Making Table Output
 kable_table <- kable(lake_data, caption = "Results using Pmap")
 kable_table %>% 
-  kable_styling(full_width = FALSE)
+  kable_styling(full_width = FALSE, 
+                bootstrap_options = "bordered",
+                position = "center")
 
 ```
 
@@ -114,7 +116,9 @@ colnames(for_loop_out) = col_names
 #Making Table Output
 kable_table <- kable(for_loop_out, caption = "Results using For Loop")
 kable_table %>% 
-  kable_styling(full_width = FALSE)
+  kable_styling(full_width = FALSE, 
+                bootstrap_options = "bordered",
+                position = "center")
 ```
 
 ## Making a Graph
