@@ -133,7 +133,8 @@ rownames(change_graphs) <- c("Precip 1", "Precip 2", "Precip 3", "Precip 4")
 plot1 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 1], fill = rownames(change_graphs))) +
   geom_col() +
   scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
-  ggtitle("Lake 1: Total Change for Each Precipitation Input") +
+  ggtitle("Lake 1: Total Change for Each Precipitation Input") + 
+  theme(title = element_text(size=8)) +
   ylab("Changed Volume (gal)") +
   xlab("Input Precipitation Levels") +
   guides(fill = F)
@@ -141,7 +142,8 @@ plot1 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = chang
 plot2 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 2], fill = rownames(change_graphs))) +
   geom_col() +
   scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
-  ggtitle("Lake 2: Total Change for Each Precipitation Input") +
+  ggtitle("Lake 2: Total Change for Each Precipitation Input") + 
+  theme(title = element_text(size=8)) +
   ylab("Changed Volume (gal)") +
   xlab("Input Precipitation Levels") +
   guides(fill = F)
@@ -149,7 +151,8 @@ plot2 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = chang
 plot3 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 3], fill = rownames(change_graphs))) +
   geom_col() +
   scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
-  ggtitle("Lake 3: Total Change for Each Precipitation Input") +
+  ggtitle("Lake 3: Total Change for Each Precipitation Input") + 
+  theme(title = element_text(size=8)) +
   ylab("Changed Volume (gal)") +
   xlab("Input Precipitation Levels") +
   guides(fill = F)
@@ -157,7 +160,8 @@ plot3 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = chang
 plot4 <- ggplot(data = change_graphs, aes(x = rownames(change_graphs), y = change_graphs[, 4], fill = rownames(change_graphs))) +
   geom_col() +
   scale_fill_manual(values = c("#E69F00", "#56B4E9", "#009E73", "#F0E442")) +
-  ggtitle("Lake 4: Total Change for Each Precipitation Input") +
+  ggtitle("Lake 4: Total Change for Each Precipitation Input") + 
+  theme(title = element_text(size=8)) +
   ylab("Changed Volume (gal)") +
   xlab("Input Precipitation Levels") +
   guides(fill = F)
